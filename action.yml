@@ -1,10 +1,5 @@
 name: 'Post notification to Slack'
 description: 'Sends a notification to a Slack channel when a PR is created'
-on: 
-  pull_request: 
-    types: [opened]
 runs:
   using: 'node12'
   main: 'dist/index.js'
-env:
-  SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
