@@ -17,13 +17,21 @@ try {
 
   ;(async () => {
     await slack.send({
-      text: 'PR opened',
+      text: "PR opened",
       blocks: [
         {
-          "type": "header",
+          "type": "section",
           "text": {
-            "type": "plain_text",
+            "type": "mrkdwn",
             "text": title
+          },
+          "accessory": {
+            "type": "button",
+            "text": {
+              "type": "plain_text",
+              "text": "View in Github",
+            },
+            "url": url,
           }
         },
         {
@@ -35,21 +43,6 @@ try {
             }
           ]
         },
-        {
-          "type": "actions",
-          "elements": [
-            {
-              "type": "button",
-              "text": {
-                "type": "plain_text",
-                "text": "Open in Github",
-                "emoji": false
-              },
-              "value": url,
-              "action_id": "action-view-pr"
-            }
-          ]
-        }
       ]
     })
   })();  
