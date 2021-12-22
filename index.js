@@ -1,15 +1,18 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+const { IncomingWebhook } = require('@slack/webhook');
 
 try {
-  const name = core.getInput('who-to-greet');
-  console.log(name);
+  if (!process.env.SLACK_WEBHOOK_URL) {
+    throw new Error('You need to provide a SLACK_WEBHOOK_URL');
+  }
 
-  const time = (new Date()).toTimeString();
-  core.setOutput('time', time);
+  const slack = new IncomingWebhook(process.env.SLACK_WEBHOOK_URL);
 
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(payload);
+  ;(async () => {
+    await slack.send({
+      text: 'Pull request created',
+    })
+  })();  
 } catch (error) {
-  core.setFailed(error);
+  core.setFailed(error.message);
 }
